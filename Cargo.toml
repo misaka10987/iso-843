@@ -2,5 +2,13 @@
 name = "iso-843"
 version = "0.1.0"
 edition = "2024"
+authors = ["misaka10987 <misaka10987@outlook.com>"]
+description = "Rust Implementation (Lib / CLI) of the ISO 843 Greek Letter Transcription Standard."
+documentation = "https://github.com/misaka10987/iso-843"
+homepage = "https://github.com/misaka10987/iso-843"
+repository = "https://github.com/misaka10987/iso-843"
+readme = "README.md"
+keywords = ["iso-843", "iso", "843", "greek", "transcription"]
+license = "MIT"
 
 [dependencies]
