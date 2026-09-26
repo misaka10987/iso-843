@@ -82,24 +82,24 @@ mod tests {
 
     #[test]
     fn preserve_case() {
-        assert_eq!("Αθήνα".iso843_transliterate(), "Athína");
+        assert_eq!("Αθήνα".iso843_transliterate(), "Athī́na");
 
-        assert_eq!("ΘΕΣΣΑΛΟΝΙΚΗ".iso843_transliterate(), "THESSALONIKI");
+        assert_eq!("ΘΕΣΣΑΛΟΝΙΚΗ".iso843_transliterate(), "THESSALONIKĪ");
 
-        assert_eq!("θεσσαλονίκη".iso843_transliterate(), "thessaloníki");
+        assert_eq!("θεσσαλονίκη".iso843_transliterate(), "thessaloníkī");
     }
 
     #[test]
     fn preserve_accent() {
         assert_eq!("ά".iso843_transliterate(), "á");
         assert_eq!("έ".iso843_transliterate(), "é");
-        assert_eq!("ή".iso843_transliterate(), "í");
+        assert_eq!("ή".iso843_transliterate(), "ī́");
         assert_eq!("ί".iso843_transliterate(), "í");
         assert_eq!("ό".iso843_transliterate(), "ó");
         assert_eq!("ύ".iso843_transliterate(), "ý");
-        assert_eq!("ώ".iso843_transliterate(), "ó");
+        assert_eq!("ώ".iso843_transliterate(), "ṓ");
 
-        assert_eq!("ΆΈΉΊΌΎΏ".iso843_transliterate(), "ÁÉÍÍÓÝÓ");
+        assert_eq!("ΆΈΉΊΌΎΏ".iso843_transliterate(), "ÁÉĪ́ÍÓÝṒ");
     }
 
     #[test]
@@ -203,29 +203,29 @@ mod tests {
     fn whitespace_unchanged() {
         assert_eq!(
             "\tΕλλάδα\nΑθήνα  κόσμος\r\n".iso843_transliterate(),
-            "\tElláda\nAthína  kósmos\r\n"
+            "\tElláda\nAthī́na  kósmos\r\n"
         );
     }
 
     #[test]
     fn real_modern_greek_words() {
         assert_eq!("Ελλάδα".iso843_transliterate(), "Elláda");
-        assert_eq!("Ελληνικά".iso843_transliterate(), "Elliniká");
-        assert_eq!("Αθήνα".iso843_transliterate(), "Athína");
+        assert_eq!("Ελληνικά".iso843_transliterate(), "Ellīniká");
+        assert_eq!("Αθήνα".iso843_transliterate(), "Athī́na");
 
         // Type I keeps ευ/αυ/ου as eu/au/ou and preserves tonos on the accented vowel.
-        assert_eq!("ευχαριστώ".iso843_transliterate(), "eucharistó");
+        assert_eq!("ευχαριστώ".iso843_transliterate(), "eucharistṓ");
         assert_eq!("ταύρος".iso843_transliterate(), "taúros");
         assert_eq!("ούρα".iso843_transliterate(), "oúra");
-        assert_eq!("αυτοκίνητο".iso843_transliterate(), "autokínito");
+        assert_eq!("αυτοκίνητο".iso843_transliterate(), "autokínīto");
     }
 
     #[test]
     fn exception_inside_words() {
         assert_eq!("ταύρος".iso843_transliterate(), "taúros");
-        assert_eq!("ευχή".iso843_transliterate(), "euchí");
+        assert_eq!("ευχή".iso843_transliterate(), "euchī́");
         assert_eq!("ούρα".iso843_transliterate(), "oúra");
-        assert_eq!("αυτοκίνητο".iso843_transliterate(), "autokínito");
+        assert_eq!("αυτοκίνητο".iso843_transliterate(), "autokínīto");
     }
 
     #[test]
