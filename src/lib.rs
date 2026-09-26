@@ -55,12 +55,12 @@ mod tests {
     fn correct_letter() {
         assert_eq!(
             "Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω".iso843_transliterate(),
-            "A B G D E Z Ī TH I K L M N X O P R S T Y F CH PS Ō"
+            "A V G D E Z Ī TH I K L M N X O P R S T Y F CH PS Ō"
         );
 
         assert_eq!(
             "α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω".iso843_transliterate(),
-            "a b g d e z ī th i k l m n x o p r s t y f ch ps ō"
+            "a v g d e z ī th i k l m n x o p r s t y f ch ps ō"
         );
     }
 
