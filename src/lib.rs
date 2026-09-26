@@ -1,10 +1,10 @@
-use aho_corasick::AhoCorasick;
-
-use crate::table::{ACCENT, EXCEPTION, LETTER};
-
 mod table;
 #[cfg(test)]
 mod test;
+
+use aho_corasick::AhoCorasick;
+
+use crate::table::{ACCENT, EXCEPTION, LETTER};
 
 pub trait Iso843 {
     fn iso843_transliterate(&self) -> String;
@@ -51,5 +51,11 @@ impl Iso843 for &str {
             .unwrap();
 
         String::from_utf8(to).unwrap()
+    }
+}
+
+impl Iso843 for String {
+    fn iso843_transliterate(&self) -> String {
+        self.as_str().iso843_transliterate()
     }
 }

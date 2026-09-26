@@ -13,3 +13,15 @@ license = "MIT"
 
 [dependencies]
 aho-corasick = "1.1.5"
+anyhow = {version = "1.0.104", optional = true}
+clap = { version = "4.6.7", features = ["derive"], optional = true }
+colored = { version = "3.1.1", optional = true }
+
+[features]
+default = []
+cli = ["clap", "colored", "anyhow"]
+
+[[bin]]
+name = "iso-843"
+path = "src/main.rs"
+required-features = ["cli"]
