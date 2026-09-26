@@ -1,10 +1,48 @@
+use aho_corasick::AhoCorasick;
+
+use crate::table::{ACCENT_VOWEL, EXCEPTION, LOWERCASE_LETTER, UPPERCASE_LETTER};
+
+mod table;
+
 pub trait Iso843 {
     fn iso843_transliterate(&self) -> String;
 }
 
 impl Iso843 for &str {
     fn iso843_transliterate(&self) -> String {
-        todo!()
+        let from = self.as_bytes().to_vec();
+        let mut to = vec![];
+
+        AhoCorasick::new(EXCEPTION[0])
+            .unwrap()
+            .try_stream_replace_all(&*from, &mut to, &EXCEPTION[1])
+            .unwrap();
+
+        let from = to;
+        let mut to = vec![];
+
+        AhoCorasick::new(ACCENT_VOWEL[0])
+            .unwrap()
+            .try_stream_replace_all(&*from, &mut to, &ACCENT_VOWEL[1])
+            .unwrap();
+
+        let from = to;
+        let mut to = vec![];
+
+        AhoCorasick::new(UPPERCASE_LETTER[0])
+            .unwrap()
+            .try_stream_replace_all(&*from, &mut to, &UPPERCASE_LETTER[1])
+            .unwrap();
+
+        let from = to;
+        let mut to = vec![];
+
+        AhoCorasick::new(LOWERCASE_LETTER[0])
+            .unwrap()
+            .try_stream_replace_all(&*from, &mut to, &LOWERCASE_LETTER[1])
+            .unwrap();
+
+        String::from_utf8(to).unwrap()
     }
 }
 
@@ -17,12 +55,12 @@ mod tests {
     fn correct_letter() {
         assert_eq!(
             "Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω".iso843_transliterate(),
-            "A B G D E Z I I TH I K L M N X O P R S T Y F CH PS O"
+            "A B G D E Z Ī TH I K L M N X O P R S T Y F CH PS Ō"
         );
 
         assert_eq!(
             "α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ σ τ υ φ χ ψ ω".iso843_transliterate(),
-            "a b g d e z i th i k l m n x o p r s t y f ch ps o"
+            "a b g d e z ī th i k l m n x o p r s t y f ch ps ō"
         );
     }
 

@@ -12,3 +12,4 @@ keywords = ["iso-843", "iso", "843", "greek", "transcription"]
 license = "MIT"
 
 [dependencies]
+aho-corasick = "1.1.5"
