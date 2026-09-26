@@ -1,6 +1,6 @@
 use aho_corasick::AhoCorasick;
 
-use crate::table::{ACCENT_VOWEL, EXCEPTION, LOWERCASE_LETTER, UPPERCASE_LETTER};
+use crate::table::{ACCENT, EXCEPTION, LETTER};
 
 mod table;
 
@@ -14,17 +14,17 @@ impl Iso843 for &str {
     ///
     /// Note that this only handles Unicode NFC normalized strings.
     /// For other formats, you can use the [`unicode-normalization`](https://crates.io/crates/unicode-normalization) crate to normalize the string first.
-    /// 
+    ///
     /// # Examples
-    /// 
+    ///
     /// ```rust
     /// use iso_843::Iso843 as _;
-    /// 
+    ///
     /// assert_eq!("Hello, world!".iso843_transliterate(), "Hello, world!");
     /// assert_eq!("Γεια σου, κόσμε!".iso843_transliterate(), "Geia sou, kósme!");
     /// ```
     fn iso843_transliterate(&self) -> String {
-        let from = self.as_bytes().to_vec();
+        let from = self.as_bytes();
         let mut to = vec![];
 
         AhoCorasick::new(EXCEPTION[0])
@@ -35,25 +35,17 @@ impl Iso843 for &str {
         let from = to;
         let mut to = vec![];
 
-        AhoCorasick::new(ACCENT_VOWEL[0])
+        AhoCorasick::new(ACCENT[0])
             .unwrap()
-            .try_stream_replace_all(&*from, &mut to, &ACCENT_VOWEL[1])
+            .try_stream_replace_all(&*from, &mut to, &ACCENT[1])
             .unwrap();
 
         let from = to;
         let mut to = vec![];
 
-        AhoCorasick::new(UPPERCASE_LETTER[0])
+        AhoCorasick::new(LETTER[0])
             .unwrap()
-            .try_stream_replace_all(&*from, &mut to, &UPPERCASE_LETTER[1])
-            .unwrap();
-
-        let from = to;
-        let mut to = vec![];
-
-        AhoCorasick::new(LOWERCASE_LETTER[0])
-            .unwrap()
-            .try_stream_replace_all(&*from, &mut to, &LOWERCASE_LETTER[1])
+            .try_stream_replace_all(&*from, &mut to, &LETTER[1])
             .unwrap();
 
         String::from_utf8(to).unwrap()
