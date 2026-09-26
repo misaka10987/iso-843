@@ -9,6 +9,20 @@ pub trait Iso843 {
 }
 
 impl Iso843 for &str {
+    /// Transliterates Greek characters to Latin characters according to ISO 843:1997 Type 1,
+    /// leaving non-Greek characters unchanged.
+    ///
+    /// Note that this only handles Unicode NFC normalized strings.
+    /// For other formats, you can use the [`unicode-normalization`](https://crates.io/crates/unicode-normalization) crate to normalize the string first.
+    /// 
+    /// # Examples
+    /// 
+    /// ```rust
+    /// use iso_843::Iso843 as _;
+    /// 
+    /// assert_eq!("Hello, world!".iso843_transliterate(), "Hello, world!");
+    /// assert_eq!("Γεια σου, κόσμε!".iso843_transliterate(), "Geia sou, kósme!");
+    /// ```
     fn iso843_transliterate(&self) -> String {
         let from = self.as_bytes().to_vec();
         let mut to = vec![];
