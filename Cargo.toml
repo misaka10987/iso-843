@@ -1,6 +1,6 @@
 [package]
 name = "iso-843"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2024"
 authors = ["misaka10987 <misaka10987@outlook.com>"]
 description = "Rust Implementation (Lib / CLI) of the ISO 843 Greek Letter Transcription Standard."
